@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring Agent</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Health Monitoring Agent</h1>
+            </div>
+            <p class="tagline">AI-powered health analysis with personalized recommendations</p>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Patient Info Section -->
+            <section class="card patient-info">
+                <h2><i class="fas fa-user-circle"></i> Patient Information</h2>
+                <div class="form-group">
+                    <label for="patientId">Patient ID:</label>
+                    <input type="text" id="patientId" value="PAT001" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="patientName">Name:</label>
+                    <input type="text" id="patientName" placeholder="Enter patient name" value="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="patientAge">Age:</label>
+                    <input type="number" id="patientAge" placeholder="Age" value="45" min="1" max="120">
+                </div>
+                <button id="updatePatient" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Update Patient Info
+                </button>
+            </section>
+
+            <!-- Health Data Input -->
+            <section class="card health-input">
+                <h2><i class="fas fa-clipboard-list"></i> Health Data Input</h2>
+                
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="heartRate"><i class="fas fa-heart"></i> Heart Rate (bpm):</label>
+                        <input type="number" id="heartRate" value="72" min="40" max="200">
+                        <div class="range-indicator">
+                            <span class="low">40</span>
+                            <input type="range" min="40" max="200" value="72" class="slider" id="heartRateSlider">
+                            <span class="high">200</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bloodPressure"><i class="fas fa-tachometer-alt"></i> Blood Pressure:</label>
+                        <div class="bp-inputs">
+                            <input type="number" id="systolic" placeholder="Systolic" value="125" min="80" max="200">
+                            <span class="bp-separator">/</span>
+                            <input type="number" id="diastolic" placeholder="Diastolic" value="82" min="50" max="150">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="temperature"><i class="fas fa-thermometer-half"></i> Temperature (°F):</label>
+                        <input type="number" id="temperature" value="98.6" min="95" max="105" step="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="steps"><i class="fas fa-walking"></i> Daily Steps:</label>
+                        <input type="number" id="steps" value="8500" min="0" max="50000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sleep"><i class="fas fa-bed"></i> Sleep (hours):</label>
+                        <input type="number" id="sleep" value="7.5" min="0" max="24" step="0.5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="water"><i class="fas fa-tint"></i> Water Intake (glasses):</label>
+                        <input type="number" id="water" value="8" min="0" max="20">
+                    </div>
+                </div>
+
+                <button id="analyzeHealth" class="btn btn-analyze">
+                    <i class="fas fa-chart-line"></i> Analyze Health Data
+                </button>
+            </section>
+
+            <!-- Analysis Results -->
+            <section class="card analysis-results">
+                <h2><i class="fas fa-chart-bar"></i> Health Analysis</h2>
+                <div class="results-container">
+                    <div class="status-card overall-status">
+                        <h3>Overall Health Status</h3>
+                        <div class="status-value" id="overallStatus">Good</div>
+                        <div class="status-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4><i class="fas fa-heart"></i> Heart Rate</h4>
+                            <div class="metric-value" id="hrStatus">Normal</div>
+                            <div class="metric-range">60-100 bpm</div>
+                        </div>
+
+                        <div class="metric-card">
+                            <h4><i class="fas fa-tachometer-alt"></i> Blood Pressure</h4>
+                            <div class="metric-value" id="bpStatus">Normal</div>
+                            <div class="metric-range">120/80</div>
+                        </div>
+
+                        <div class="metric-card">
+                            <h4><i class="fas fa-walking"></i> Activity</h4>
+                            <div class="metric-value" id="activityStatus">Good</div>
+                            <div class="metric-range">≥ 7500 steps</div>
+                        </div>
+
+                        <div class="metric-card">
+                            <h4><i class="fas fa-bed"></i> Sleep</h4>
+                            <div class="metric-value" id="sleepStatus">Good</div>
+                            <div class="metric-range">7-9 hours</div>
+                        </div>
+                    </div>
+
+                    <div class="compression-info">
+                        <h4><i class="fas fa-compress-alt"></i> Data Compression</h4>
+                        <div class="compression-bar">
+                            <div class="compression-fill" id="compressionFill" style="width: 65%"></div>
+                        </div>
+                        <div class="compression-text">
+                            <span>Original Size: 100%</span>
+                            <span>Compressed: <span id="compressionRatio">65%</span></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations -->
+            <section class="card recommendations">
+                <h2><i class="fas fa-lightbulb"></i> Personalized Recommendations</h2>
+                <div class="recommendations-list" id="recommendationsList">
+                    <div class="recommendation-item">
+                        <i class="fas fa-tint recommendation-icon"></i>
+                        <div class="recommendation-text">
+                            <h4>Hydration</h4>
+                            <p>Drink at least 8 glasses of water daily to maintain proper hydration.</p>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <i class="fas fa-bed recommendation-icon"></i>
+                        <div class="recommendation-text">
+                            <h4>Sleep Quality</h4>
+                            <p>Aim for 7-9 hours of quality slee
+                                p each night for optimal recovery.</p>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <i class="fas fa-walking recommendation-icon"></i>
+                        <div class="recommendation-text">
+                            <h4>Physical Activity</h4>
+                            <p>Take a 30-minute walk daily to improve cardiovascular health.</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="generateNewRecs" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Generate New Recommendations
+                </button>
+            </section>
+
+            <!-- Alerts Section -->
+            <section class="card alerts">
+                <h2><i class="fas fa-exclamation-triangle"></i> Health Alerts</h2>
+                <div class="alerts-list" id="alertsList">
+                    <div class="alert-item alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="alert-text">
+                            <h4>Regular Check-up</h4>
+                            <p>Schedule your annual health check-up.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visualization -->
+            <section class="card visualization">
+                <h2><i class="fas fa-chart-line"></i> Health Trends</h2>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+                <div class="time-selector">
+                    <button class="time-btn active">Daily</button>
+                    <button class="time-btn">Weekly</button>
+                    <button class="time-btn">Monthly</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Health Monitoring Agent v1.0 | AI-Powered Health Analysis</p>
+            <p class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-download"></i> Export Report</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
